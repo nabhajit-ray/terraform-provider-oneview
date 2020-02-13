@@ -31,6 +31,54 @@ func dataSourceServerProfileTemplate() *schema.Resource {
 				Elem:     &schema.Schema{Type: schema.TypeString},
 				Set:      schema.HashString,
 			},
+			"boot_mode": {
+				Optional: true,
+				Type:     schema.TypeSet,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"manage_mode": {
+							Type:     schema.TypeBool,
+							Required: true,
+						},
+						"mode": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+						"pxe_boot_policy": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+					},
+				},
+			},
+			"bios_option": {
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"manage_bios": {
+							Type:     schema.TypeBool,
+							Required: true,
+						},
+						"overridden_settings": {
+							Optional: true,
+							Type:     schema.TypeSet,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": {
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"value": {
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
 			"type": {
 				Type:     schema.TypeString,
 				Computed: true,
@@ -41,32 +89,308 @@ func dataSourceServerProfileTemplate() *schema.Resource {
 			},
 			"network": {
 				Optional: true,
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": {
 							Type:     schema.TypeString,
-							Computed: true,
+							Required: true,
 						},
 						"function_type": {
 							Type:     schema.TypeString,
-							Computed: true,
+							Required: true,
+							ForceNew: true,
 						},
 						"network_uri": {
 							Type:     schema.TypeString,
-							Computed: true,
+							Required: true,
 						},
 						"port_id": {
 							Type:     schema.TypeString,
-							Computed: true,
+							Optional: true,
+							Default:  "Lom 1:1-a",
 						},
 						"requested_mbps": {
 							Type:     schema.TypeString,
-							Computed: true,
+							Optional: true,
+							Default:  "2500",
 						},
 						"id": {
 							Type:     schema.TypeInt,
-							Computed: true,
+							Optional: true,
+						},
+						"boot": {
+							Optional: true,
+							Type:     schema.TypeSet,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"priority": {
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"ethernet_boot_type": {
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"boot_volume_source": {
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"iscsi": {
+										Type:     schema.TypeSet,
+										Optional: true,
+										MaxItems: 1,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"chap_level": {
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"first_boot_target_ip": {
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"first_boot_target_port": {
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"initiator_name_source": {
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"second_boot_target_ip": {
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"second_boot_target_port": {
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+											},
+										},
+									},
+								},
+							},
+						},
+						"ipv4": {
+							Type:     schema.TypeSet,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"gateway": {
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"ip_address_source": {
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"firmware": {
+				Optional: true,
+				Type:     schema.TypeSet,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"force_install_firmware": {
+							Type:     schema.TypeBool,
+							Optional: true,
+						},
+						"firmware_baseline_uri": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"manage_firmware": {
+							Type:     schema.TypeBool,
+							Optional: true,
+						},
+						"firmware_install_type": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+					},
+				},
+			},
+			"local_storage": {
+				Optional: true,
+				Type:     schema.TypeSet,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"manage_local_storage": {
+							Type:     schema.TypeBool,
+							Optional: true,
+						},
+						"initialize": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+					},
+				},
+			},
+			"logical_drives": {
+				Optional: true,
+				Type:     schema.TypeSet,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"bootable": {
+							Type:     schema.TypeBool,
+							Optional: true,
+						},
+						"raid_level": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+					},
+				},
+			},
+			"san_storage": {
+				Optional: true,
+				Type:     schema.TypeSet,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"host_os_type": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"manage_san_storage": {
+							Type:     schema.TypeBool,
+							Optional: true,
+						},
+						"server_hardware_type_uri": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"server_hardware_uri": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"serial_number": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"type": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"uri": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+					},
+				},
+			},
+			// schema for ov.SanStorage.VolumeAttachments
+			"volume_attachments": {
+				Optional: true,
+				Type:     schema.TypeSet,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": {
+							Type:     schema.TypeInt,
+							Required: true,
+						},
+						"lun": {
+							Type:     schema.TypeString,
+							Required: true,
+						},
+						"lun_type": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"boot_volume_priority": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"permanent": {
+							Type:     schema.TypeBool,
+							Optional: true,
+						},
+						"volume_storage_pool_uri": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"volume_storage_system_uri": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"volume_uri": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"volume_shareable": {
+							Type:     schema.TypeBool,
+							Optional: true,
+						},
+						"volume_description": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"volume_provision_type": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"volume_provisioned_capacity_bytes": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"volume_name": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"storage_paths": {
+							Optional: true,
+							Type:     schema.TypeSet,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"status": {
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"storage_target_type": {
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"target_selector": {
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"is_enabled": {
+										Type:     schema.TypeBool,
+										Optional: true,
+									},
+									"connection_id": {
+										Type:     schema.TypeInt,
+										Optional: true,
+									},
+									"targets": {
+										Type:     schema.TypeSet,
+										Optional: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"ip_address": {
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"name": {
+													Type:     schema.TypeString,
+													Optional: true,
+												},
+												"tcp_port": {
+													Type:     schema.TypeInt,
+													Optional: true,
+												},
+											},
+										},
+									},
+								},
+							},
 						},
 					},
 				},
