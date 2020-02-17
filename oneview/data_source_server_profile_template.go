@@ -495,6 +495,18 @@ func dataSourceServerProfileTemplateRead(d *schema.ResourceData, meta interface{
 		}
 		d.Set("boot_order", bootOrder)
 	}
-
+	
+	if len(local_storage) != 0 {
+		rawLocalStorage := d.Get("local_storage").(*schema.Set).List()
+		localStorage := ov.LocalStorageOptions{}
+		for _, raw := range rawLocalStorage {
+			localStorageItem := raw.(map[string]interface{})
+			localStorage = ov.LocalStorageOptions{
+				ManageLocalStorage: localStorageItem["manage_local_storage"].(bool),
+				Initialize:         localStorageItem["initialize"].(bool),
+			}
+		}
+		d.Set("local_storage", localStorage)
+	}
 	return nil
 }
