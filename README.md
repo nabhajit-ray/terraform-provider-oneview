@@ -37,7 +37,9 @@ $ docker pull prisood/terraform-provider-oneview
 # terraform and the provider with ease.
 $ docker run -it prisood/terraform-provider-oneview /bin/sh
 ```
+[Here](https://github.com/HewlettPackard/terraform-provider-oneview/blob/video_demo/VideoDemo/terraform_oneview_provider.mp4) is a video demo of how we can quickly spin up a container and get started with the SDK.
 
+Note: As it is mp4 file, you need to download it to view.
 
 ### Provider Information
 
