@@ -11,7 +11,7 @@ builds:
       flags:
           - -trimpath
       ldflags:
-          - "-s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X github.com/terraform-providers/terraform-provider-datadog/version.ProviderVersion={{.Version}}"
+          - "-s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X github.com/terraform-providers/terraform-provider-oneview/version.ProviderVersion={{.Version}}"
       goos:
           - freebsd
           - windows
