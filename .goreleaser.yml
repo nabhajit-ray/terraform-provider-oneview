@@ -29,6 +29,9 @@ builds:
 archives:
     - format: zip
       name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+checksum:
+    name_template: "{{ .ProjectName }}_{{ .Version }}_SHA256SUMS"
+    algorithm: sha256
 
 release:
     # Visit your project's GitHub Releases page to publish this release.
