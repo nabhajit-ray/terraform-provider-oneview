@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/HewlettPackard/terraform-provider-oneview.svg?branch=master)](https://travis-ci.org/HewlettPackard/terraform-provider-oneview)
 
-A Terraform provider for oneview
+A Terraform 12 provider for oneview
 
 ## Installing `terraform-provider-oneview` with Go
 
