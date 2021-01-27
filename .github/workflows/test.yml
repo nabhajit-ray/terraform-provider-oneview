@@ -27,7 +27,7 @@ jobs:
               uses: actions/checkout@v2
             - name: Format  
               run: if [ "$(gofmt -s -l . | wc -l)" -gt 0 ]; then exit 1; fi
-              if: matrix.os == 'ubuntu-latest'
+              if: matrix.platform == 'ubuntu-latest'
             - name: Vet
               run: go vet
             - name: Test
