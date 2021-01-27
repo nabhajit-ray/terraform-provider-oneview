@@ -8,7 +8,7 @@ A Terraform 12 provider for oneview
 
 * Install Go 1.11. For previous versions, you may have to set your `$GOPATH` manually, if you haven't done it yet.
 * Install Terraform 0.11.x [from here](https://www.terraform.io/downloads.html) and save it into `/usr/local/bin/terraform` folder (create it if it doesn't exists). This provider DOES NOT SUPPORT Terraform 0.12 or above.
-* Download the code by issuing a `go get` command finally123456.
+* Download the code by issuing a `go get` command finally1234567.
 
 ```bash
 # Download the source code for terraform-provider-oneview
