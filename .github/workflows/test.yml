@@ -28,7 +28,9 @@ jobs:
             - name: Setup environment for collection publish
               run: |
                 echo "GITHUB_REF=${GITHUB_REF:10}" >> $GITHUB_ENV
-                echo "GITHUB_BRANCH=${GITHUB_REF:11}">>$GITHUB_ENV
+                echo "GITHUB_BRANCH=${GITHUB_REF:11}">> $GITHUB_ENV
+            - name: Print env
+              run:  echo ${{ env.GITHUB_REF }}
             - name: Format  
               run: if ![ -z "$(find . -type f -name "*.go" -not -path "./vendor/*" | sed "s|^\./||" | xargs gofmt -l)" ]; then exit 1; fi
               if: matrix.platform == 'ubuntu-latest'
