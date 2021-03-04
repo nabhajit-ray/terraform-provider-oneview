@@ -15,7 +15,7 @@ jobs:
     - name: Set up Go 1.11
       uses: actions/setup-go@v1
       with:
-        go-version: 1.11
+        go-version: 1.12
 
     - name: Check out code into the Go module directory
       uses: actions/checkout@v1
@@ -46,6 +46,7 @@ jobs:
       
     - name: Build disabling CGO and getting a statically linked binary.
       run: |
+        export GO111MODULE=off
         mkdir -p $TF_DOWNLOAD_PATH
         bash <(curl -s https://raw.githubusercontent.com/patrickdappollonio/download-terraform-binaries/master/download_terraform_binaries.sh)
         GOOS=linux go build -a -tags netgo -ldflags '-s -w' -o $TF_DOWNLOAD_PATH/linux/$BUILDNAME
