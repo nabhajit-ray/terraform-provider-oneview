@@ -67,7 +67,7 @@ jobs:
 
       
     - name: run something
-      run:  docker run -it --rm=true hewlettpackardenterprise/terraform-provider-oneview /bin/bash -c "echo '' >> /demo.tf && cd / && /usr/local/terraform/terraform plan"  
+      run:  docker run --rm=true hewlettpackardenterprise/terraform-provider-oneview /bin/bash -c "echo '' >> /demo.tf && cd / && /usr/local/terraform/terraform plan"  
       env: 
         GOPATH: /home/runner/work/terraform-provider-oneview/go
         BUILDNAME: terraform-provider-oneview
