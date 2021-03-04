@@ -16,6 +16,8 @@ jobs:
       uses: actions/setup-go@v1
       with:
         go-version: 1.12.4
+    - name : Set GO111MODULE to OFF
+      run:  echo "GO111MODULE=off" >> $GITHUB_ENV
 
     - name: Check out code into the Go module directory
       uses: actions/checkout@v1
