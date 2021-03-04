@@ -16,7 +16,7 @@ unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/local/terraform/
 ENV GOROOT /usr/local/go
 ENV GOPATH /go
 ENV PATH /go/bin:$PATH
-RUN export GO111MODULE=off
+RUN export GO111MODULE=auto
 
 RUN mkdir -p ${GOPATH}/src ${GOPATH}/bin
 WORKDIR /go/src/github.com/HewlettPackard/terraform-provider-oneview
@@ -24,6 +24,7 @@ WORKDIR /go/src/github.com/HewlettPackard/terraform-provider-oneview
 COPY . /go/src/github.com/HewlettPackard/terraform-provider-oneview
 
 RUN cd $GOPATH/src/github.com/HewlettPackard/terraform-provider-oneview
+RUN export GO111MODULE=auto
 RUN go build -o $GOPATH/bin/terraform-provider-oneview
 RUN mv $GOPATH/bin/terraform-provider-oneview /usr/local/terraform/
 
