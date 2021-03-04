@@ -58,6 +58,14 @@ jobs:
     - name: Create the docker image from the Dockerfile and Run a Sanity Check against an empty terraform file. When ran, it should fail if the compilation was unsuccessful.
 
       run: docker build . --file Dockerfile --tag $REPO
+      env: 
+        GOPATH: /home/runner/work/terraform-provider-oneview/go
+        BUILDNAME: terraform-provider-oneview
+        TF_DOWNLOAD_PATH: ./bins
+        GOARCH: amd64
+        REPO: $DOCKER_USERNAME/terraform-provider-oneview
+
+      
     - name: run something
       run:  docker run -it --rm=true $REPO /bin/bash -c "echo '' >> /demo.tf && cd / && /usr/local/terraform/terraform plan"  
       env: 
