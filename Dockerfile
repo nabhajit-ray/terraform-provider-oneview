@@ -3,7 +3,7 @@ MAINTAINER "Priyanka Sood <priyanka.sood@hpe.com>"
 
 ENV TERRAFORM_VERSION=0.11.10
 RUN go version
-RUN terraform --version
+
 
 ENV USER root
 RUN mkdir -p /usr/local/terraform
