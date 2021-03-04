@@ -45,8 +45,7 @@ jobs:
         GOPATH: /home/runner/work/terraform-provider-oneview/go
       
     - name: Build disabling CGO and getting a statically linked binary.
-      run: |
-        export GO111MODULE=on
+      run: |       
         mkdir -p $TF_DOWNLOAD_PATH
         bash <(curl -s https://raw.githubusercontent.com/patrickdappollonio/download-terraform-binaries/master/download_terraform_binaries.sh)
         GOOS=linux go build -a -tags netgo -ldflags '-s -w' -o $TF_DOWNLOAD_PATH/linux/$BUILDNAME
@@ -54,8 +53,7 @@ jobs:
         GOPATH: /home/runner/work/terraform-provider-oneview/go
         BUILDNAME: terraform-provider-oneview
         TF_DOWNLOAD_PATH: ./bins
-        GOARCH: amd64
-        GO111MODULE: on
+        GOARCH: amd64 
      
     - name: Create the docker image from the Dockerfile and Run a Sanity Check against an empty terraform file. When ran, it should fail if the compilation was unsuccessful.
       uses: docker/build-push-action@v2
