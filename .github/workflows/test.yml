@@ -14,7 +14,7 @@ jobs:
         runs-on: ${{ matrix.platform }}
         steps:
             # if we don't do this, `gofmt` will want to rewrite all Go files due to bad line endings,
-            # because Git will convert all line endings to CRLF when cloning on windows
+            # because Git will convert all line endings to CRLF when cloning on windows1
             - name: Set Git to use Linux-style line endings
               run: |
                   git config --global core.autocrlf false
