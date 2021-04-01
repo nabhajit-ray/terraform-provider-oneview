@@ -28,7 +28,7 @@ jobs:
             - name: List File 
               run: ls -ltr
             - name: List notfmt file
-              run: find . -type f -name "*.go" -not -path "./vendor/*" | sed "s|^\./||" | xargs gofmt -l)"
+              run: find . -type f -name "*.go" -not -path "./vendor/*" | sed "s|^\./||" | xargs gofmt -l
             - name: Format  
               run: if [ ! -z "$(find . -type f -name "*.go" -not -path "./vendor/*" | sed "s|^\./||" | xargs gofmt -l)" ]; then exit 1; fi
               if: matrix.platform == 'ubuntu-latest'
