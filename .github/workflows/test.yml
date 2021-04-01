@@ -10,7 +10,7 @@ jobs:
     test:
         strategy:
             matrix:
-                platform: [ubuntu-latest, windows-latest]
+                platform: [ubuntu-latest,macos-latest, windows-latest]
         runs-on: ${{ matrix.platform }}
         steps:
             # if we don't do this, `gofmt` will want to rewrite all Go files due to bad line endings,
@@ -32,7 +32,7 @@ jobs:
               run: find . -type f -name "*.go" -not -path "./vendor/*" | sed "s|^\./||" | xargs gofmt -l
               if: matrix.platform == 'ubuntu-latest'
             - name: Format  
-              run: if [ ! -z "$(find . -type f -name "*.go" -not -path "./vendor/*" | sed "s|^\./||" | xargs gofmt -l)" ]; then exit 1; fi
+              run: if ![ -z "$(find . -type f -name "*.go" -not -path "./vendor/*" | sed "s|^\./||" | xargs gofmt -l)" ]; then exit 1; fi
               if: matrix.platform == 'ubuntu-latest'
             - name: Vet
               run: go vet $(go list ./... | grep -v '/vendor/')
